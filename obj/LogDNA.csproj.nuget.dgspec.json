@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Home\\source\\repos\\LogDNA\\LogDNA.csproj": {}
+    "C:\\Users\\Home\\source\\repos\\LogDNA\\LogDNA\\LogDNA.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Home\\source\\repos\\LogDNA\\LogDNA.csproj": {
+    "C:\\Users\\Home\\source\\repos\\LogDNA\\LogDNA\\LogDNA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Home\\source\\repos\\LogDNA\\LogDNA.csproj",
+        "projectUniqueName": "C:\\Users\\Home\\source\\repos\\LogDNA\\LogDNA\\LogDNA.csproj",
         "projectName": "LogDNA",
-        "projectPath": "C:\\Users\\Home\\source\\repos\\LogDNA\\LogDNA.csproj",
+        "projectPath": "C:\\Users\\Home\\source\\repos\\LogDNA\\LogDNA\\LogDNA.csproj",
         "packagesPath": "C:\\Users\\Home\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Home\\source\\repos\\LogDNA\\obj\\",
+        "outputPath": "C:\\Users\\Home\\source\\repos\\LogDNA\\LogDNA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -67,6 +67,18 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[8.0.4, )"
+            },
+            "Serilog.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Serilog.Sinks.Console": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Serilog.Sinks.LogDNA": {
+              "target": "Package",
+              "version": "[1.0.3, )"
             },
             "System.Configuration.ConfigurationManager": {
               "target": "Package",

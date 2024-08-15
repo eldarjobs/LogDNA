@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using LogDNA.Models; // Models namespace
+using LogDNA.Models; // Product model üçün namespace
 
 namespace LogDNA.Data
 {
@@ -10,12 +10,6 @@ namespace LogDNA.Data
         {
         }
 
-        public DbSet<Products> Products { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Products>().ToTable("Products");
-        }
+        public DbSet<Product> Products { get; set; }
     }
 }

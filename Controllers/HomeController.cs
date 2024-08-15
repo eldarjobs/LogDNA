@@ -1,42 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using LogDNA.Data;
-using LogDNA.Models;
-using System.Threading.Tasks;
+﻿using LogDNA.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace LogDNA.Controllers
 {
-    public class ProductController : Controller
+    public class HomeController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _homeContext; // Fərqli ad istifadə edin
 
-        public ProductController(ApplicationDbContext context)
+        public HomeController(ApplicationDbContext context, ILogger<HomeController> logger)
         {
-            _context = context;
+            _homeContext = context;
+            _logger = logger;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var products = await _context.Products.ToListAsync();
-            return View(products);
-        }
-
-        public IActionResult Create()
-        {
+            // İstifadə edin _homeContext
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Price,Description")] Products product)
+        public IActionResult Privacy()
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(product);
+            return View();
         }
     }
 }

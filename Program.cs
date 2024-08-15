@@ -1,33 +1,53 @@
-﻿using LogDNA.Data; // Veritabanı kontekstinizi ehtiva edən namespace
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.SystemConsole;
+using Serilog.Sinks.LogDNA; // LogDNA sink üçün namespace
+using LogDNA.Data; // DbContext üçün namespace
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+// Serilog konfiqurasiyası
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console() // Console sink-i əlavə edin
+    .WriteTo.LogDNA("50d2b7121f1ff8d3e3e83948aba45839")  // Mezmo (LogDNA) üçün sink
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
+// Verilənlər bazası konfiqurasiyası
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SecondAppContext")
         ?? throw new InvalidOperationException("Connection string 'SecondAppContext' not found.")));
 
-// Add any other services or configurations here if needed
-// builder.Services.AddScoped<IMyService, MyService>(); // Example of adding a custom service
+// Razor Pages xidmətlərinin əlavə edilməsi
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
-    app.UseHsts(); // Add HTTP Strict Transport Security
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles(); // Serve static files
-
+app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthorization();
 
-app.UseAuthorization(); // Authorization middleware
+// Razor Pages üçün route-ların xəritələnməsi
+app.MapRazorPages();
 
-app.MapRazorPages(); // Map Razor Pages routes
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run(); // Run the application
+app.Run();
